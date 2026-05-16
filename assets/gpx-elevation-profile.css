@@ -1,0 +1,233 @@
+/* ============================================================
+   GPX Elevation Profile – Stylesheet  v1.1
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap');
+
+/* ── Shared base ── */
+.gpx-ep-wrapper {
+    --ep-accent:  #2ecc71;
+    --ep-radius:  14px;
+    font-family: 'Sora', sans-serif;
+    border-radius: var(--ep-radius);
+    overflow: hidden;
+    margin: 2em 0;
+}
+
+/* ── Dark Theme (Standard) ── */
+.gpx-ep-wrapper.gpx-ep-theme-dark {
+    --ep-bg:      #0f1117;
+    --ep-surface: #1a1d27;
+    --ep-border:  rgba(255, 255, 255, 0.08);
+    --ep-text:    #e8eaf0;
+    --ep-muted:   #6b7280;
+    --ep-grid:    rgba(255, 255, 255, 0.05);
+    --ep-shadow:  0 8px 40px rgba(0, 0, 0, 0.45);
+    background:   var(--ep-bg);
+    box-shadow:   var(--ep-shadow);
+    color:        var(--ep-text);
+}
+
+.gpx-ep-theme-dark .gpx-ep-spinner {
+    border-color: rgba(255, 255, 255, 0.12);
+    border-top-color: var(--ep-accent);
+}
+
+.gpx-ep-theme-dark .gpx-ep-map .leaflet-container {
+    background: #1a1d27;
+}
+
+.gpx-ep-theme-dark .gpx-ep-tooltip {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Light Theme ── */
+.gpx-ep-wrapper.gpx-ep-theme-light {
+    --ep-bg:      #f7f8fa;
+    --ep-surface: #ffffff;
+    --ep-border:  rgba(0, 0, 0, 0.09);
+    --ep-text:    #1a1d27;
+    --ep-muted:   #6b7280;
+    --ep-grid:    rgba(0, 0, 0, 0.06);
+    --ep-shadow:  0 4px 24px rgba(0, 0, 0, 0.10);
+    background:   var(--ep-bg);
+    box-shadow:   var(--ep-shadow);
+    color:        var(--ep-text);
+}
+
+.gpx-ep-theme-light .gpx-ep-spinner {
+    border-color: rgba(0, 0, 0, 0.10);
+    border-top-color: var(--ep-accent);
+}
+
+.gpx-ep-theme-light .gpx-ep-map .leaflet-container {
+    background: #e8edf2;
+}
+
+.gpx-ep-theme-light .gpx-ep-tooltip {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Loading State ── */
+.gpx-ep-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 60px 20px;
+    color: var(--ep-muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+.gpx-ep-spinner {
+    width: 22px;
+    height: 22px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    animation: gpx-spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes gpx-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Stats Bar ── */
+.gpx-ep-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 1px solid var(--ep-border);
+    background: var(--ep-surface);
+}
+
+.gpx-ep-stat {
+    flex: 1;
+    min-width: 110px;
+    padding: 16px 20px;
+    border-right: 1px solid var(--ep-border);
+}
+
+.gpx-ep-stat:last-child { border-right: none; }
+
+.gpx-ep-stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ep-muted);
+    margin-bottom: 5px;
+    font-family: 'DM Mono', monospace;
+}
+
+.gpx-ep-stat-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ep-text);
+}
+
+.gpx-ep-stat-value span {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--ep-muted);
+    margin-left: 3px;
+    font-family: 'DM Mono', monospace;
+}
+
+.gpx-ep-stat-accent { color: var(--ep-accent) !important; }
+
+/* ── Map ── */
+.gpx-ep-map {
+    width: 100%;
+    height: 280px;
+    border-bottom: 1px solid var(--ep-border);
+}
+
+/* ── Chart Area ── */
+.gpx-ep-chart-area {
+    padding: 20px 20px 12px;
+    position: relative;
+    background: var(--ep-bg);
+}
+
+.gpx-ep-chart-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ep-muted);
+    margin-bottom: 12px;
+    font-family: 'DM Mono', monospace;
+}
+
+.gpx-ep-chart-wrap {
+    position: relative;
+}
+
+canvas.gpx-ep-canvas {
+    display: block;
+    width: 100% !important;
+}
+
+/* ── Tooltip ── */
+.gpx-ep-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--ep-surface);
+    border: 1px solid var(--ep-border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    font-family: 'DM Mono', monospace;
+    color: var(--ep-text);
+    white-space: nowrap;
+    transform: translate(-50%, -110%);
+    display: none;
+    z-index: 100;
+}
+
+.gpx-ep-tooltip b { color: var(--ep-accent); }
+
+/* ── Hover marker ── */
+.gpx-ep-marker-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--ep-accent, #2ecc71);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.3);
+}
+
+/* ── Footer ── */
+.gpx-ep-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px 14px;
+    font-size: 0.65rem;
+    color: var(--ep-muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.06em;
+    border-top: 1px solid var(--ep-border);
+    background: var(--ep-surface);
+}
+
+.gpx-ep-footer a { color: var(--ep-muted); text-decoration: none; }
+
+/* ── Error ── */
+.gpx-ep-error {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    color: #e74c3c;
+    font-size: 0.85rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .gpx-ep-stat { min-width: 90px; padding: 12px 14px; }
+    .gpx-ep-stat-value { font-size: 1.1rem; }
+    .gpx-ep-map { height: 200px; }
+}
