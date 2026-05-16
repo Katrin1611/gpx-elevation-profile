@@ -23,11 +23,12 @@ Zeigt GPX-Dateien als **interaktives Höhenprofil mit Leaflet-Karte** in WordPre
 | `color`   | `#2ecc71`     | Akzentfarbe (Linie, Marker, Gradient)  |
 | `units`   | `metric`      | `metric` (km/m) oder `imperial` (mi/ft)|
 | `map`     | `true`        | `false` = Karte ausblenden             |
+| `theme`   | `dark`        | `light` = wechselt zum Light Theme     |
 
 ### Beispiele
 
 ```
-[gpx_elevation file="alpenüberquerung.gpx" height="500" color="#e74c3c"]
+[gpx_elevation file="alpenüberquerung.gpx" height="500" color="#e74c3c" theme="light"]
 
 [gpx_elevation file="https://example.com/tour.gpx" map="false" units="imperial"]
 ```
@@ -51,4 +52,4 @@ Unter **Einstellungen → GPX Elevation** können Standard-Werte und der Karten-
 - ✅ Metrisch & imperial
 - ✅ Konfigurierbare Farbe pro Widget
 - ✅ Responsive
-- ✅ Dark-Mode-Design
+- ✅ Dark-Mode-Design, das optional auch zu "Light" geändert werden kann
