@@ -1,54 +1,74 @@
 # GPX Elevation Profile – WordPress Plugin
 
-Zeigt GPX-Dateien als **interaktives Höhenprofil mit Leaflet-Karte** in WordPress an.
+Displays GPX files as an **interactive elevation profile with a Leaflet map** in WordPress.
 
 ## Installation
 
-1. Diesen Ordner (`gpx-elevation-profile/`) in `/wp-content/plugins/` kopieren.
-2. Im WordPress-Admin unter **Plugins** das Plugin aktivieren.
-3. GPX-Dateien über **Medien → Datei hinzufügen** hochladen.
+1. Copy the `gpx-elevation-profile/` folder to `/wp-content/plugins/`.
+2. Activate the plugin in the WordPress admin under **Plugins**.
+3. Upload GPX files via **Media → Add New**.
 
-## Verwendung (Shortcode)
-
-```
-[gpx_elevation file="meine-tour.gpx"]
-```
-
-### Alle Parameter
-
-| Parameter | Standard      | Beschreibung                           |
-|-----------|---------------|----------------------------------------|
-| `file`    | *(Pflicht)*   | Dateiname aus dem Media-Upload oder absolute URL |
-| `height`  | `450`         | Höhe des Höhenprofil-Charts in Pixel   |
-| `color`   | `#2ecc71`     | Akzentfarbe (Linie, Marker, Gradient)  |
-| `units`   | `metric`      | `metric` (km/m) oder `imperial` (mi/ft)|
-| `map`     | `true`        | `false` = Karte ausblenden             |
-
-### Beispiele
+## Usage (Shortcode)
 
 ```
-[gpx_elevation file="alpenüberquerung.gpx" height="500" color="#e74c3c"]
-
-[gpx_elevation file="https://example.com/tour.gpx" map="false" units="imperial"]
+[gpx_elevation file="my-tour.gpx"]
 ```
 
-## Einstellungen
+### All Parameters
 
-Unter **Einstellungen → GPX Elevation** können Standard-Werte und der Karten-Tile-Provider konfiguriert werden.
+| Parameter | Default     | Description                                              |
+|-----------|-------------|----------------------------------------------------------|
+| `file`    | *(required)*| Filename from the media library or an absolute URL       |
+| `height`  | `450`       | Height of the elevation chart in pixels                  |
+| `color`   | `#2ecc71`   | Accent color for the track line, markers, and gradient   |
+| `units`   | `metric`    | `metric` (km/m) or `imperial` (mi/ft)                   |
+| `map`     | `true`      | Set to `false` to hide the map                          |
+| `stats`   | `true`      | Set to `false` to hide the statistics bar               |
+| `theme`   | `dark`      | `dark` (default) or `light`                             |
 
-## Abhängigkeiten (werden automatisch geladen)
+### Examples
 
-- **Leaflet 1.9** – interaktive Karte
-- **Chart.js 4** – Höhenprofil
-- **OpenStreetMap** – Kartenmaterial (kostenfrei)
+```
+[gpx_elevation file="alpine-tour.gpx"]
+
+[gpx_elevation file="alpine-tour.gpx" theme="light" color="#0ea5e9" height="500"]
+
+[gpx_elevation file="alpine-tour.gpx" stats="false"]
+
+[gpx_elevation file="https://example.com/route.gpx" map="false" units="imperial" theme="light"]
+```
+
+## Settings
+
+Go to **Settings → GPX Elevation** to configure default values and the map tile provider.
+
+## Dependencies (loaded automatically)
+
+- **Leaflet 1.9** – interactive map
+- **Chart.js 4** – elevation chart
+- **OpenStreetMap** – map tiles (free)
 
 ## Features
 
-- ✅ GPX-Track-Parsing (trkpt, Höhendaten, Zeitstempel)
-- ✅ Waypoints als Marker auf der Karte
-- ✅ Statistiken: Distanz, Aufstieg, Abstieg, Min/Max-Höhe
-- ✅ Interaktiver Hover: Tooltip + Marker bewegt sich auf der Karte mit
-- ✅ Metrisch & imperial
-- ✅ Konfigurierbare Farbe pro Widget
-- ✅ Responsive
-- ✅ Dark-Mode-Design
+- ✅ GPX track parsing (trkpt, elevation data, timestamps)
+- ✅ Waypoints displayed as markers on the map
+- ✅ Statistics: distance, ascent, descent, min/max elevation
+- ✅ Interactive hover: tooltip + marker moves along the map in sync
+- ✅ Metric & imperial units
+- ✅ Configurable accent color per widget
+- ✅ Responsive layout
+- ✅ Dark theme (default) and light theme, selectable per shortcode
+- ✅ Statistics bar can be hidden per shortcode
+
+## Changelog
+
+### 1.3.0
+- Added `stats` parameter to show/hide the statistics bar
+
+### 1.2.0
+- Added `theme` parameter (`dark` / `light`) per shortcode
+- Fixed elevation calculation: distance-based decimation + hysteresis filter to prevent inflated ascent/descent values
+- Fixed minimum elevation showing 0 when GPX points have missing elevation data
+
+### 1.1.0
+- Initial public release

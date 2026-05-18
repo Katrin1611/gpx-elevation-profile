@@ -177,7 +177,7 @@
     }
 
     /* ── HTML-Skeleton rendern ───────────────────────────────── */
-    function buildSkeleton(wrapper, stats, name, showMap) {
+    function buildSkeleton(wrapper, stats, name, showMap, showStats) {
         // Akzentfarbe als CSS-Variable setzen (wrapper selbst wird nicht verändert)
         wrapper.style.setProperty('--ep-accent', wrapper.dataset.color || '#2ecc71');
 
@@ -187,10 +187,7 @@
             ? `<div class="gpx-ep-map" id="${wrapper.id}-map"></div>`
             : '';
 
-        // WICHTIG: Nur innerHTML des Wrappers füllen – Klassen und data-Attribute
-        // am wrapper-Element selbst bleiben unangetastet.
-        wrapper.innerHTML = `
-            <div class="gpx-ep-stats">
+        const statsHTML = showStats ? `<div class="gpx-ep-stats">
                 <div class="gpx-ep-stat">
                     <div class="gpx-ep-stat-label">Strecke</div>
                     <div class="gpx-ep-stat-value gpx-ep-stat-accent">${stats.distance}<span>${stats.distUnit}</span></div>
@@ -211,7 +208,12 @@
                     <div class="gpx-ep-stat-label">Min. Höhe</div>
                     <div class="gpx-ep-stat-value">${stats.minEle}<span>${stats.eleUnit}</span></div>
                 </div>
-            </div>
+            </div>` : '';
+
+        // WICHTIG: Nur innerHTML des Wrappers füllen – Klassen und data-Attribute
+        // am wrapper-Element selbst bleiben unangetastet.
+        wrapper.innerHTML = `
+            ${statsHTML}
             ${mapHTML}
             <div class="gpx-ep-chart-area">
                 <div class="gpx-ep-chart-title">Höhenprofil</div>
@@ -383,7 +385,8 @@
     async function initWidget(wrapper) {
         const fileUrl = wrapper.dataset.file;
         const units   = wrapper.dataset.units || 'metric';
-        const showMap = wrapper.dataset.map !== 'false';
+        const showMap   = wrapper.dataset.map   !== 'false';
+        const showStats = wrapper.dataset.stats !== 'false';
         const accent  = wrapper.dataset.color || '#2ecc71';
 
         try {
@@ -396,7 +399,7 @@
 
             // Skeleton rendern (wrapper.innerHTML wird ersetzt,
             // aber wrapper.className und wrapper.dataset bleiben erhalten)
-            buildSkeleton(wrapper, stats, name, showMap);
+            buildSkeleton(wrapper, stats, name, showMap, showStats);
 
             let mapObj = null;
             if (showMap && typeof L !== 'undefined') {

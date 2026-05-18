@@ -3,7 +3,7 @@
  * Plugin Name:       GPX Elevation Profile
  * Plugin URI:        https://github.com/your-username/gpx-elevation-profile
  * Description:       Zeigt GPX-Dateien als interaktives Höhenprofil mit Karte an. Shortcode: [gpx_elevation file="datei.gpx"]
- * Version:           1.2.0
+ * Version:           1.3.0
  * Author:            Your Name
  * License:           GPL-2.0+
  * Text Domain:       gpx-elevation-profile
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'GPX_EP_VERSION', '1.2.0' );
+define( 'GPX_EP_VERSION', '1.3.0' );
 define( 'GPX_EP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GPX_EP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -50,6 +50,7 @@ class GPX_Elevation_Profile {
             'color'  => get_option( 'gpx_ep_default_color', '#2ecc71' ),
             'units'  => get_option( 'gpx_ep_default_units', 'metric' ),
             'map'    => 'true',
+            'stats'  => 'true',
             'theme'  => 'dark',   // dark | light  –  nur per Shortcode steuerbar
         ], $atts, 'gpx_elevation' );
 
@@ -81,6 +82,7 @@ class GPX_Elevation_Profile {
              data-color="<?php echo esc_attr( $atts['color'] ); ?>"
              data-units="<?php echo esc_attr( $atts['units'] ); ?>"
              data-map="<?php echo esc_attr( $atts['map'] ); ?>"
+             data-stats="<?php echo esc_attr( $atts['stats'] ); ?>"
              data-theme="<?php echo esc_attr( $theme ); ?>">
             <div class="gpx-ep-loading">
                 <div class="gpx-ep-spinner"></div>
@@ -196,6 +198,7 @@ class GPX_Elevation_Profile {
                     <tr><td><code>height</code></td><td>450</td><td>Höhe des Diagramms in Pixeln</td></tr>
                     <tr><td><code>units</code></td><td>metric</td><td><code>metric</code> (km/m) oder <code>imperial</code> (mi/ft)</td></tr>
                     <tr><td><code>map</code></td><td>true</td><td><code>false</code> blendet die Karte aus</td></tr>
+                    <tr><td><code>stats</code></td><td>true</td><td><code>false</code> blendet die Statistik-Leiste aus</td></tr>
                 </tbody>
             </table>
             <p style="margin-top:16px">GPX-Dateien über <strong>Medien → Datei hinzufügen</strong> hochladen, dann den Dateinamen im Shortcode verwenden.</p>
