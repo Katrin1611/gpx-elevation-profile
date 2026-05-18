@@ -3,7 +3,7 @@
  * Plugin Name:       GPX Elevation Profile
  * Plugin URI:        https://github.com/your-username/gpx-elevation-profile
  * Description:       Zeigt GPX-Dateien als interaktives Höhenprofil mit Karte an. Shortcode: [gpx_elevation file="datei.gpx"]
- * Version:           1.3.0
+ * Version:           1.4.0
  * Author:            Your Name
  * License:           GPL-2.0+
  * Text Domain:       gpx-elevation-profile
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'GPX_EP_VERSION', '1.3.0' );
+define( 'GPX_EP_VERSION', '1.4.0' );
 define( 'GPX_EP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GPX_EP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

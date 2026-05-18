@@ -22,9 +22,10 @@
         }
 
         const points = Array.from(trkpts).map(pt => ({
-            lat: parseFloat(pt.getAttribute('lat')),
-            lon: parseFloat(pt.getAttribute('lon')),
-            ele: parseFloat(pt.querySelector('ele')?.textContent || '0'),
+            lat:  parseFloat(pt.getAttribute('lat')),
+            lon:  parseFloat(pt.getAttribute('lon')),
+            ele:  parseFloat(pt.querySelector('ele')?.textContent || '0'),
+            time: pt.querySelector('time')?.textContent || null,
         }));
 
         const waypoints = Array.from(wpts).map(w => ({
@@ -37,7 +38,13 @@
             || xml.querySelector('metadata > name')?.textContent
             || 'GPX-Route';
 
-        return { points, waypoints, name };
+        // Extract date from the first point that has a timestamp
+        const firstTime = points.find(p => p.time)?.time || null;
+        const trackDate = firstTime
+            ? new Date(firstTime).toLocaleDateString(undefined, { day: '2-digit', month: '2-digit', year: 'numeric' })
+            : null;
+
+        return { points, waypoints, name, trackDate };
     }
 
     /* ── Haversine ───────────────────────────────────────────── */
@@ -177,7 +184,7 @@
     }
 
     /* ── HTML-Skeleton rendern ───────────────────────────────── */
-    function buildSkeleton(wrapper, stats, name, showMap, showStats) {
+    function buildSkeleton(wrapper, stats, name, showMap, showStats, trackDate) {
         // Akzentfarbe als CSS-Variable setzen (wrapper selbst wird nicht verändert)
         wrapper.style.setProperty('--ep-accent', wrapper.dataset.color || '#2ecc71');
 
@@ -223,7 +230,7 @@
                 </div>
             </div>
             <div class="gpx-ep-footer">
-                <span>${escHtml(name)}</span>
+                <span>${escHtml(name)}${trackDate ? ' &nbsp;·&nbsp; ' + escHtml(trackDate) : ''}</span>
                 <span>GPX Elevation Profile</span>
             </div>`;
     }
@@ -394,12 +401,12 @@
             if (!res.ok) throw new Error(`HTTP ${res.status} – Datei konnte nicht geladen werden.`);
             const xmlText = await res.text();
 
-            const { points, waypoints, name } = parseGPX(xmlText);
+            const { points, waypoints, name, trackDate } = parseGPX(xmlText);
             const stats = computeStats(points, units);
 
             // Skeleton rendern (wrapper.innerHTML wird ersetzt,
             // aber wrapper.className und wrapper.dataset bleiben erhalten)
-            buildSkeleton(wrapper, stats, name, showMap, showStats);
+            buildSkeleton(wrapper, stats, name, showMap, showStats, trackDate);
 
             let mapObj = null;
             if (showMap && typeof L !== 'undefined') {
