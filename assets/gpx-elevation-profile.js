@@ -230,7 +230,7 @@
                 </div>
             </div>
             <div class="gpx-ep-footer">
-                <span>${escHtml(name)}${trackDate ? ' &nbsp;·&nbsp; ' + escHtml(trackDate) : ''}</span>
+                <span>${trackDate ? escHtml(trackDate) + ' &nbsp;·&nbsp; ' : ''}${escHtml(name)}</span>
                 <span>GPX Elevation Profile</span>
             </div>`;
     }
