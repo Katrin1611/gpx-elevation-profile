@@ -62,6 +62,13 @@ Go to **Settings → GPX Elevation** to configure default values and the map til
 
 ## Changelog
 
+### 1.4.1
+- Track date is now displayed first in the footer, followed by the track name
+
+### 1.4.0
+- Track date is now extracted from GPX timestamps and displayed in the widget footer
+- Date is formatted according to the visitor's local browser locale
+
 ### 1.3.0
 - Added `stats` parameter to show/hide the statistics bar
 
